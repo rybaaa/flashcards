@@ -83,6 +83,7 @@ export const createCard = createAsyncThunk<
     return response.data
   } catch (e: any) {
     thunkAPI.dispatch(setSubmittingAC({ status: 'failed' }))
+    e.message = 'Size too much'
     errorMessage(thunkAPI.dispatch, e)
   } finally {
     thunkAPI.dispatch(isNewCardPackAddedAC({ isNewCardPackAdded: true }))

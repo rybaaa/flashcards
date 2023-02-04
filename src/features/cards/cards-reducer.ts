@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 
 import { cardsApi } from 'api/cardsApi'
-import { setSubmittingAC } from 'app/app-reducer'
+import { setErrorAC, setSubmittingAC } from 'app/app-reducer'
 import { RootStateType } from 'app/store'
 import {
   AsyncThunkConfig,
@@ -83,8 +83,7 @@ export const createCard = createAsyncThunk<
     return response.data
   } catch (e: any) {
     thunkAPI.dispatch(setSubmittingAC({ status: 'failed' }))
-    e.message = 'Size too much'
-    errorMessage(thunkAPI.dispatch, e)
+    thunkAPI.dispatch(setErrorAC({ error: 'Size is too much' }))
   } finally {
     thunkAPI.dispatch(isNewCardPackAddedAC({ isNewCardPackAdded: true }))
   }

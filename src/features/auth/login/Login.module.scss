@@ -18,6 +18,16 @@
       padding-bottom: 5px;
     }
 
+    .example{
+      display: flex;
+      flex-direction: column;
+      gap:10px;
+      margin-bottom: 20px;
+      span{
+        @include text(14px, 400, 14px);
+      }
+    }
+
     .fieldError {
 
       @include text(14px, 600, 22px);
@@ -31,7 +41,7 @@
       text-align: center;
     }
 
-    .singIn {
+    .signIn {
 
       @include text(26px, 600, 32px);
 

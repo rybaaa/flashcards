@@ -71,7 +71,12 @@ export const Login = () => {
         <ErrorSnackbar />
         <FormControl className={style.formControl}>
           {status === 'loading' && <LinearProgress color={'primary'} />}
-          <h1 className={style.singIn}>Sign in</h1>
+          <h1 className={style.signIn}>Sign in</h1>
+          <div className={style.example}>
+            <span>or use common test account credentials:</span>
+            <span>Email: lel22888@gmail.com</span>
+            <span>Password: 12345678</span>
+          </div>
           <form onSubmit={handleSubmit}>
             <FormGroup>
               <FormControl sx={{ m: 1 }} variant="standard">

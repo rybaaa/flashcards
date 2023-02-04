@@ -114,6 +114,8 @@ export const Cards = () => {
                               id={card._id}
                               question={card.question}
                               answer={card.answer}
+                              answerCover={card.answerImg}
+                              questionCover={card.questionImg}
                             />
                           </TableCell>
                         </TableRow>

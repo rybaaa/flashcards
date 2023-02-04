@@ -185,12 +185,6 @@ const slice = createSlice({
         state.packId = action.payload.packId
       }
     })
-    // builder.addCase(createCard.fulfilled, (state, action) => {
-    //   if (action.payload) {
-    //     state.cardsData.cards = action.payload.data
-    //     state.isLoaded = true
-    //   }
-    // })
     builder.addCase(setGrade.fulfilled, (state, action) => {
       if (action.payload) {
         state.cardsData.cards.map(card => {

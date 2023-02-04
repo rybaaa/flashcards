@@ -28,8 +28,16 @@ type AddModalsType = {
   id: string
   questionValue: string
   answerValue: string
+  questionCover: string
+  answerCover: string
 }
-export const EditModalCard: FC<AddModalsType> = ({ id, questionValue, answerValue }) => {
+export const EditModalCard: FC<AddModalsType> = ({
+  id,
+  questionValue,
+  answerValue,
+  answerCover,
+  questionCover,
+}) => {
   console.log(answerValue)
   const dispatch = useAppDispatch()
   const loadingStatus = useAppSelector(appStatusSelector)
@@ -119,7 +127,7 @@ export const EditModalCard: FC<AddModalsType> = ({ id, questionValue, answerValu
               <MenuItem value="Image">Image</MenuItem>
             </Select>
           </FormControl>
-          {format === 'Image' ? (
+          {questionCover || answerCover ? (
             <InputTypeFileCard
               addAnswerImage={setImageAnswer}
               addQuestionImage={setImageQuestion}

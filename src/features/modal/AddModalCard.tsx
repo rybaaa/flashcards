@@ -36,6 +36,7 @@ export const AddModalCard: FC<AddModalsType> = ({
   const [imageQuestion, setImageQuestion] = useState('')
   const [imageAnswer, setImageAnswer] = useState('')
   const handleChange = (event: SelectChangeEvent) => {
+    console.log(event.target.value)
     setFormat(event.target.value)
   }
 
@@ -122,7 +123,6 @@ export const AddModalCard: FC<AddModalsType> = ({
             type={'submit'}
             variant={'contained'}
             className={s.buttonSave}
-            disabled={!question || !answer}
           >
             Save
           </Button>

@@ -78,6 +78,7 @@ export const AddModalPack: FC<AddModalsType> = ({
             type={'submit'}
             variant={'contained'}
             className={s.buttonSave}
+            disabled={!text}
           >
             Save
           </Button>

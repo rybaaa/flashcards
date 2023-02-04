@@ -90,6 +90,7 @@ export const EditModalPack: FC<AddModalsType> = ({ id, name }) => {
               type={'submit'}
               variant={'contained'}
               className={s.buttonSave}
+              disabled={!text}
             >
               Save
             </Button>

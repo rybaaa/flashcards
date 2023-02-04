@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import { Visibility, VisibilityOff } from '@mui/icons-material'
-import { IconButton, LinearProgress } from '@mui/material'
+import { IconButton } from '@mui/material'
 import Button from '@mui/material/Button'
 import FormControl from '@mui/material/FormControl'
 import Input from '@mui/material/Input'
@@ -69,10 +69,8 @@ export const Register = () => {
   return (
     <div className={`${style.formWrapper} ${styleContainer.container}`}>
       <Paper>
-        {status === 'loading' && <LinearProgress color={'primary'} />}
         <form className={style.form} onSubmit={formik.handleSubmit}>
           <h1 className={style.heading}>Sign Up</h1>
-
           <FormControl sx={{ m: 1 }} variant="standard">
             <InputLabel htmlFor={'email'}>Email</InputLabel>
             <Input
@@ -83,7 +81,6 @@ export const Register = () => {
             />
             <div className={style.fieldError}>{formik.touched.email && formik.errors.email}</div>
           </FormControl>
-
           <FormControl sx={{ m: 1 }} variant="standard">
             <InputLabel htmlFor={'password'}>Password</InputLabel>
             <Input

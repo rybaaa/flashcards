@@ -58,6 +58,9 @@ const slice = createSlice({
     setPageAC(state, action: PayloadAction<{ page: number }>) {
       state.packs.page = action.payload.page
     },
+    setPageCountAC(state, action: PayloadAction<{ pageCount: number }>) {
+      state.packs.pageCount = action.payload.pageCount
+    },
     setIdSearchAC(state, action: PayloadAction<{ id: string }>) {
       state.searchParams.idSearch = action.payload.id
     },
@@ -76,8 +79,14 @@ const slice = createSlice({
 
 export const cardsPackReducer = slice.reducer
 
-export const { isMyPacksAC, setPackNameAC, setPageAC, isNewCardPackAddedAC, setIdSearchAC } =
-  slice.actions
+export const {
+  isMyPacksAC,
+  setPackNameAC,
+  setPageAC,
+  isNewCardPackAddedAC,
+  setIdSearchAC,
+  setPageCountAC,
+} = slice.actions
 
 export const addPackTC = createAsyncThunk<
   { data: CreatePackResponseType },
@@ -92,9 +101,9 @@ export const addPackTC = createAsyncThunk<
     try {
       const response = await packsApi.createPack(payload)
       const { pageCount, page } = state.pack.packs
+      const userId = state.pack.searchParams.idSearch
 
-      dispatch(fetchPacks({ pageCount, page }))
-      dispatch(setSubmittingAC({ status: 'success' }))
+      dispatch(fetchPacks({ pageCount, page, user_id: userId }))
 
       return { data: response.data }
     } catch (e) {
@@ -135,10 +144,9 @@ export const deletePack = createAsyncThunk<
     const response = await packsApi.deletePack(payload)
     const state = getState() as RootStateType
     const { pageCount, page } = state.pack.packs
+    const userId = state.pack.searchParams.idSearch
 
-    dispatch(fetchPacks({ pageCount, page }))
-
-    dispatch(setSubmittingAC({ status: 'success' }))
+    dispatch(fetchPacks({ pageCount, page, user_id: userId }))
 
     return { data: response.data }
   } catch (e) {
@@ -163,9 +171,9 @@ export const updatePack = createAsyncThunk<
     try {
       const response = await packsApi.updatePack(payload)
       const { pageCount, page } = state.pack.packs
+      const userId = state.pack.searchParams.idSearch
 
-      dispatch(fetchPacks({ pageCount, page }))
-      dispatch(setSubmittingAC({ status: 'success' }))
+      dispatch(fetchPacks({ pageCount, page, user_id: userId }))
 
       return { data: response.data }
     } catch (e) {
@@ -198,6 +206,7 @@ export type CardsPacksActionType =
   | ReturnType<typeof setPackNameAC>
   | ReturnType<typeof isNewCardPackAddedAC>
   | ReturnType<typeof setPageAC>
+  | ReturnType<typeof setPageCountAC>
   | ReturnType<typeof setIdSearchAC>
 
 export const packsListTableNames: TableHeaderDataType[] = [

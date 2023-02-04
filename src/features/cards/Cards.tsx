@@ -19,6 +19,7 @@ import {
   pageCardsSelector,
   pageCountCardsSelector,
   setCardPage,
+  setCardPageCount,
   setSearchCardName,
 } from './cards-reducer'
 import style from './Cards.module.scss'
@@ -41,7 +42,7 @@ export const Cards = () => {
   const [search, setSearch] = useState<string>(cardNameSearch)
   const debouncedSearch = useDebounce<string>(search, 500)
   const page = useAppSelector(pageCardsSelector)
-  const [pageCount, setPageCount] = useState(useAppSelector(pageCountCardsSelector))
+  const pageCount = useAppSelector(pageCountCardsSelector)
   const cardsTotalCount = useAppSelector(cardsTotalCountSelector)
 
   const dispatch = useAppDispatch()
@@ -53,7 +54,7 @@ export const Cards = () => {
 
   const onChangePagination = (newPage: number, newCount: number) => {
     dispatch(setCardPage(newPage))
-    setPageCount(newCount)
+    dispatch(setCardPageCount(newCount))
   }
 
   useEffect(() => {
@@ -72,7 +73,6 @@ export const Cards = () => {
         dispatch(
           fetchCards({
             cardsPack_id,
-            pageCount: 10,
             answer: '',
           })
         )
@@ -90,7 +90,6 @@ export const Cards = () => {
             <div className={style.search}>
               <SearchField search={search} handleChangeSearch={handleChangeSearch} />
             </div>
-
             <TableContainer component={Paper}>
               <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <SuperTableHeader titles={cardsListTableNames} cardPack_id={packId} />

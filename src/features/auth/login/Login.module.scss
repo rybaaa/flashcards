@@ -18,12 +18,14 @@
       padding-bottom: 5px;
     }
 
-    .example{
+    .example {
       display: flex;
       flex-direction: column;
-      gap:10px;
+      gap: 10px;
+
       margin-bottom: 20px;
-      span{
+      span {
+
         @include text(14px, 400, 14px);
       }
     }

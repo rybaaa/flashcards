@@ -13,7 +13,11 @@ import s from './DeleteModal.module.scss'
 import { appStatusSelector } from 'app/app-reducer'
 import { RootStateType, useAppDispatch, useAppSelector } from 'app/store'
 import Close from 'assets/icons/close.svg'
-import { deleteCard, packUserIdSelector } from 'features/cards/cards-reducer'
+import {
+  deleteCard,
+  packUserIdSelector,
+  pageCountCardsSelector,
+} from 'features/cards/cards-reducer'
 import { isNewCardPackAddedAC, isNewCardPackAddedSelector } from 'features/packs/cardsPack-reducer'
 
 type AddModalsType = {
@@ -27,6 +31,7 @@ export const DeleteModalCard: FC<AddModalsType> = ({ id, questionValue }) => {
   const { packId } = useAppSelector((state: RootStateType) => state.cards)
   const packUserId = useAppSelector(packUserIdSelector)
   const userId = useAppSelector(userIdSelector)
+  const pageCount = useAppSelector(pageCountCardsSelector)
 
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
@@ -39,7 +44,7 @@ export const DeleteModalCard: FC<AddModalsType> = ({ id, questionValue }) => {
       deleteCard({
         data: {
           cardsPack_id: packId,
-          pageCount: 10,
+          pageCount,
         },
         cardId: id,
       })

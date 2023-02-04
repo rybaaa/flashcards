@@ -17,7 +17,11 @@ import { BasicModals } from './basicModals'
 import { appStatusSelector } from 'app/app-reducer'
 import { RootStateType, useAppDispatch, useAppSelector } from 'app/store'
 import Close from 'assets/icons/close.svg'
-import { packUserIdSelector, updateCard } from 'features/cards/cards-reducer'
+import {
+  packUserIdSelector,
+  pageCountCardsSelector,
+  updateCard,
+} from 'features/cards/cards-reducer'
 import { isNewCardPackAddedAC, isNewCardPackAddedSelector } from 'features/packs/cardsPack-reducer'
 
 type AddModalsType = {
@@ -26,6 +30,7 @@ type AddModalsType = {
   answerValue: string
 }
 export const EditModalCard: FC<AddModalsType> = ({ id, questionValue, answerValue }) => {
+  console.log(answerValue)
   const dispatch = useAppDispatch()
   const loadingStatus = useAppSelector(appStatusSelector)
   const isNewCardPackAdded = useAppSelector(isNewCardPackAddedSelector)
@@ -33,6 +38,7 @@ export const EditModalCard: FC<AddModalsType> = ({ id, questionValue, answerValu
   const [open, setOpen] = useState(false)
   const [answer, setAnswer] = useState(answerValue)
   const [question, setQuestion] = useState(questionValue)
+  const pageCount = useAppSelector(pageCountCardsSelector)
 
   const packUserId = useAppSelector(packUserIdSelector)
   const userId = useAppSelector(userIdSelector)
@@ -66,9 +72,7 @@ export const EditModalCard: FC<AddModalsType> = ({ id, questionValue, answerValu
         },
         data: {
           cardsPack_id: packId,
-          question: questionValue,
-          answer: answerValue,
-          pageCount: 10,
+          pageCount,
         },
       })
     )
@@ -101,7 +105,6 @@ export const EditModalCard: FC<AddModalsType> = ({ id, questionValue, answerValu
             <p className={s.title}>Edit pack</p>
             <img onClick={handlerOnClickCancel} className={s.img} src={Close} alt={'close'} />
           </div>
-
           <FormControl variant="standard" sx={{ width: '100%', marginBottom: '23px' }}>
             <InputLabel id="demo-simple-select-standard-label">Choose a question format</InputLabel>
             <Select
@@ -129,6 +132,7 @@ export const EditModalCard: FC<AddModalsType> = ({ id, questionValue, answerValu
                 label="Question"
                 variant="standard"
                 onChange={handlerQuestion}
+                defaultValue={question}
               />
               <TextField
                 className={s.input}
@@ -136,6 +140,7 @@ export const EditModalCard: FC<AddModalsType> = ({ id, questionValue, answerValu
                 label="Answer"
                 variant="standard"
                 onChange={handlerAnswer}
+                defaultValue={answer}
               />
             </>
           )}
@@ -148,6 +153,7 @@ export const EditModalCard: FC<AddModalsType> = ({ id, questionValue, answerValu
               type={'submit'}
               variant={'contained'}
               className={s.buttonSave}
+              disabled={!question || !answer}
             >
               Save
             </Button>

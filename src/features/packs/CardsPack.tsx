@@ -20,6 +20,7 @@ import {
   pageSelector,
   setPackNameAC,
   setPageAC,
+  setPageCountAC,
 } from './cardsPack-reducer'
 import s from './CardsPack.module.scss'
 import { FiltersField } from './FiltersField/FiltersField'
@@ -38,7 +39,7 @@ export const CardsPack = () => {
   const cardPacksTotalCount = useAppSelector(cardPacksTotalCountSelector)
   const page = useAppSelector(pageSelector)
   const packNameSearch = useAppSelector(packNameSearchSelector)
-  const [pageCount, setPageCount] = useState(useAppSelector(pageCountSelector))
+  const pageCount = useAppSelector(pageCountSelector)
   const [search, setSearch] = useState<string>(searchParams.get('packName') || packNameSearch)
   const debouncedSearch = useDebounce<string>(search, 500)
   const searchId = useAppSelector(idSearchSelector)
@@ -52,7 +53,7 @@ export const CardsPack = () => {
 
   const onChangePagination = (newPage: number, newCount: number) => {
     dispatch(setPageAC({ page: newPage }))
-    setPageCount(newCount)
+    dispatch(setPageCountAC({ pageCount: newCount }))
     searchParams.set('page', newPage.toString())
     searchParams.set('pageCount', newCount.toString())
     setSearchParams(searchParams)

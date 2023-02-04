@@ -45,9 +45,10 @@ export const updateCard = createAsyncThunk(
   ) => {
     thunkAPI.dispatch(setSubmittingAC({ status: 'loading' }))
     try {
+      console.log('upd: ', updatedCard)
+      console.log('data: ', data)
       await cardsApi.updateCard(updatedCard)
       await thunkAPI.dispatch(fetchCards(data))
-      thunkAPI.dispatch(setSubmittingAC({ status: 'success' }))
     } catch (e: any) {
       thunkAPI.dispatch(setSubmittingAC({ status: 'failed' }))
     } finally {
@@ -60,23 +61,22 @@ export const createCard = createAsyncThunk<
   { data: CardType[] },
   { card: CreateCardRequestType },
   AsyncThunkConfig
->('cards/createCard', async (data, thunkAPI) => {
+>('cards/createCard', async (card, thunkAPI) => {
   thunkAPI.dispatch(setSubmittingAC({ status: 'loading' }))
   try {
+    const state = thunkAPI.getState() as RootStateType
     const response = await cardsApi.createCard({
-      cardsPack_id: data.card.cardsPack_id,
-      question: data.card.question,
-      answer: data.card.answer,
-      answerImg: data.card.answerImg,
-      questionImg: data.card.questionImg,
-      pageCount: 10,
+      cardsPack_id: card.card.cardsPack_id,
+      question: card.card.question,
+      answer: card.card.answer,
+      answerImg: card.card.answerImg,
+      questionImg: card.card.questionImg,
     })
 
-    thunkAPI.dispatch(setSubmittingAC({ status: 'success' }))
     thunkAPI.dispatch(
       fetchCards({
-        cardsPack_id: data.card.cardsPack_id,
-        pageCount: 10,
+        cardsPack_id: card.card.cardsPack_id,
+        pageCount: state.cards.cardsData.pageCount,
       })
     )
 
@@ -100,7 +100,6 @@ export const deleteCard = createAsyncThunk<
     try {
       await cardsApi.deleteCard(cardId)
       await thunkAPI.dispatch(fetchCards(data))
-      thunkAPI.dispatch(setSubmittingAC({ status: 'success' }))
 
       return cardId
     } catch (e: any) {
@@ -155,7 +154,7 @@ const slice = createSlice({
       minGrade: 0 as number,
       packUserId: null as string | null,
       page: 1 as number,
-      pageCount: 10 as number,
+      pageCount: 4 as number,
       packName: '' as string,
     },
     packId: null as string | null,
@@ -174,6 +173,9 @@ const slice = createSlice({
     setCardPage(state, action: PayloadAction<number>) {
       state.cardsData.page = action.payload
     },
+    setCardPageCount(state, action: PayloadAction<number>) {
+      state.cardsData.pageCount = action.payload
+    },
   },
   extraReducers: builder => {
     builder.addCase(fetchCards.fulfilled, (state, action) => {
@@ -183,12 +185,12 @@ const slice = createSlice({
         state.packId = action.payload.packId
       }
     })
-    builder.addCase(createCard.fulfilled, (state, action) => {
-      if (action.payload) {
-        state.cardsData.cards = action.payload.data
-        state.isLoaded = true
-      }
-    })
+    // builder.addCase(createCard.fulfilled, (state, action) => {
+    //   if (action.payload) {
+    //     state.cardsData.cards = action.payload.data
+    //     state.isLoaded = true
+    //   }
+    // })
     builder.addCase(setGrade.fulfilled, (state, action) => {
       if (action.payload) {
         state.cardsData.cards.map(card => {
@@ -205,7 +207,7 @@ const slice = createSlice({
 })
 
 export const cardsReducer = slice.reducer
-export const { setPackId, setSearchCardName, setCardPage } = slice.actions
+export const { setPackId, setSearchCardName, setCardPage, setCardPageCount } = slice.actions
 export const cardsTotalCountSelector = (state: RootStateType): number =>
   state.cards.cardsData.cardsTotalCount
 export const userIdSelector = (state: RootStateType): string => state.profile.profile._id
@@ -221,6 +223,7 @@ export type CardsReducerType =
   | ReturnType<typeof setPackId>
   | ReturnType<typeof setSearchCardName>
   | ReturnType<typeof setCardPage>
+  | ReturnType<typeof setCardPageCount>
 
 export const cardsListTableNames: CardsTableHeaderDataType[] = [
   { name: 'Question', sortName: 'question' },

@@ -57,7 +57,6 @@ export const AddModalCard: FC<AddModalsType> = ({
           answerImg: imageAnswer,
           questionImg: imageQuestion,
           cardsPack_id: packId,
-          pageCount: 10,
         },
       })
     )
@@ -123,6 +122,7 @@ export const AddModalCard: FC<AddModalsType> = ({
             type={'submit'}
             variant={'contained'}
             className={s.buttonSave}
+            disabled={!question || !answer}
           >
             Save
           </Button>

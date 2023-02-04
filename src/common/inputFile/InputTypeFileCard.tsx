@@ -62,7 +62,9 @@ export const InputTypeFileCard: FC<InputTypeFileCardType> = ({
           Change cover
         </Button>
       </label>
-      <img src={imageQuestion} className={s.image} />
+      <div className={s.imgBlock}>
+        {imageQuestion && <img src={imageQuestion} className={s.image} alt={'image question'} />}
+      </div>
       <label className={s.container}>
         <p className={s.p}>Answer:</p>
         <input type="file" onChange={addAnswerImageHandler} style={{ display: 'none' }} />
@@ -70,7 +72,9 @@ export const InputTypeFileCard: FC<InputTypeFileCardType> = ({
           Change cover
         </Button>
       </label>
-      <img src={imageAnswer} className={s.image} />
+      <div className={s.imgBlock}>
+        {imageAnswer && <img src={imageAnswer} className={s.image} alt={'image answer'} />}
+      </div>
     </>
   )
 }

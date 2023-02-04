@@ -10,14 +10,14 @@
   margin: 40px 0;
 
   .cover {
-    h2 {
+    .h2 {
 
       @include text(22px, 600, 27px);
 
       margin-bottom: 13px;
     }
     img {
-      width: 170px;
+      width: 100px;
       height: 100px;
     }
   }

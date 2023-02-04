@@ -7,14 +7,12 @@
   margin: 0 25px;
 
   .text {
-
     @include text(14px, 500, 17px);
 
     font-style: normal;
   }
 
   .buttons {
-
     @include text(14px, 400, 17px);
 
     box-sizing: border-box;

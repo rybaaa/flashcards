@@ -4,7 +4,7 @@ import { IconButton } from '@mui/material'
 
 import { useAppSelector } from '../../app/store'
 import icon from '../../assets/icons/photo.png'
-import defaultAva from '../../assets/images/no-image.svg'
+import defaultAva from '../../assets/images/default-avatar.svg'
 import { avatarSelector } from '../../features/profile/profile-reducer'
 
 import style from './InputTypeFileProfile.module.scss'
@@ -46,7 +46,7 @@ export const InputTypeFileProfile = (props: InputTypeFileProfileType) => {
       <label>
         <input className={style.input} type="file" onChange={uploadHandler} />
         <IconButton component="span" className={style.icon}>
-          <img src={icon} />
+          <img src={icon} alt={'change avatar'} />
         </IconButton>
       </label>
     </div>

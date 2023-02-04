@@ -11,7 +11,6 @@
     align-items: flex-start;
     justify-content: space-between;
     .title {
-
       @include text(18px, 500, 22px);
 
       margin-bottom: 55px;
@@ -25,7 +24,6 @@
     margin-bottom: 29px;
   }
   .checkBox {
-
     @include text(12px, 500, 20px);
   }
   .buttonContainer {

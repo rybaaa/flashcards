@@ -7,7 +7,7 @@ import style from './Header.module.scss'
 import { PATH } from 'app/routes/routes'
 import { useAppSelector } from 'app/store'
 import logo from 'assets/images/cards.svg'
-import defaultAva from 'assets/images/person.png'
+import defaultAva from 'assets/images/default-avatar.svg'
 import { isLoggedInSelector } from 'features/auth/login/auth-reducer'
 import { avatarSelector, nameSelector } from 'features/profile/profile-reducer'
 

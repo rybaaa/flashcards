@@ -8,11 +8,9 @@
 
   margin-bottom: 7px;
   .p {
-
     @include text(16px, 500, 20px);
   }
   .button {
-
     @include text(14px, 500, 20px);
 
     color: $primaryColor;
